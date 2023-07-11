@@ -4,7 +4,7 @@ const Header = () => {
   return (
     <header className="text-white bg-gray-950 w-full">
       <div className="flex justify-between items-center container mx-auto px-5 py-4">
-        <div className="text-3xl tracking-tighter font-bold">
+        <div className="text-[1.6rem] tracking-tighter font-bold">
           ProShop <span className="text-rose-500">.</span>
         </div>
         <div className="flex justify-center items-center gap-4">
