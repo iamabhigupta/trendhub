@@ -1,4 +1,6 @@
-const products = [
+import Product from './entities/Product';
+
+const products: Product[] = [
   {
     _id: '1',
     name: 'Airpods Wireless Bluetooth Headphones',
