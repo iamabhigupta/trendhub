@@ -1,7 +1,21 @@
-import Product from '../components/ProductCard';
-import products from '../products';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+
+import ProductCard from '../components/ProductCard';
+import Product from '../entities/Product';
 
 const HomeScreen = () => {
+  const [products, setProducts] = useState<Product[]>();
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const { data } = await axios.get('http://localhost:8000/api/products');
+      setProducts(data);
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
     <>
       <section className="">
@@ -10,8 +24,8 @@ const HomeScreen = () => {
             Latest Products
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {products.map((product) => (
-              <Product key={product._id} product={product} />
+            {products?.map((product) => (
+              <ProductCard key={product._id} product={product} />
             ))}
           </div>
         </div>
