@@ -1,20 +1,11 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-
 import ProductCard from '../components/ProductCard';
-import Product from '../entities/Product';
+import { useGetProductsQuery } from '../slices/productsApiSlice';
 
 const HomeScreen = () => {
-  const [products, setProducts] = useState<Product[]>();
+  const { data: products, isLoading, error } = useGetProductsQuery();
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const { data } = await axios.get('http://localhost:8000/api/products');
-      setProducts(data);
-    };
-
-    fetchProducts();
-  }, []);
+  if (isLoading) return <p>Loading...</p>;
+  // if (error) return <p>{error?.data?.message || error.error}</p>;
 
   return (
     <>
