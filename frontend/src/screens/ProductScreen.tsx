@@ -1,28 +1,14 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import Rating from '../components/Rating';
-import Product from '../entities/Product';
+import useGetProduct from '../hooks/useGetProduct';
 
 const ProductScreen = () => {
-  const [products, setProducts] = useState<Product[]>();
-
   const { id: productId } = useParams();
-  const product = products?.find((p) => p._id === productId);
+  const { data: product, isLoading, error } = useGetProduct(productIdx!);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const { data } = await axios.get('http://localhost:8000/api/products');
-      setProducts(data);
-    };
-
-    fetchProducts();
-  }, []);
-
-  if (!product) {
-    return <p>No Product</p>;
-  }
+  if (isLoading) return 'Loading';
+  if (error || !product) throw error;
 
   return (
     <section className="text-gray-600 body-font overflow-hidden">
@@ -66,18 +52,6 @@ const ProductScreen = () => {
               >
                 Add to cart
               </button>
-              {/* <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
-                <svg
-                  fill="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  className="w-5 h-5"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
-                </svg>
-              </button> */}
             </div>
           </div>
         </div>

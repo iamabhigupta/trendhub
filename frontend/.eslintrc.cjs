@@ -31,5 +31,6 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn', // Warn about missing dependencies in useEffect and useCallback
     '@typescript-eslint/no-unused-vars': 'warn', // Warn on unused TypeScript variables
     '@typescript-eslint/explicit-module-boundary-types': 'off', // Allow omitting return types on functions in TypeScript
+    '@typescript-eslint/no-non-null-assertion': 'off',
   },
 };
