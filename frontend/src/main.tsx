@@ -10,7 +10,7 @@ import {
 
 import App from './App.tsx';
 import './index.css';
-import HomeScreen from './screens/HomeScreen';
+import HomeScreen from './screens/HomeScreen.tsx';
 import ProductScreen from './screens/ProductScreen';
 import ErrorScreen from './screens/ErrorScreen.tsx';
 

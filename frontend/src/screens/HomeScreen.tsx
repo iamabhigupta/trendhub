@@ -1,10 +1,11 @@
 import ProductCard from '../components/ProductCard';
+import Spinner from '../components/Spinner';
 import useGetProducts from '../hooks/useGetProducts';
 
 const HomeScreen = () => {
   const { data: products, isLoading, error } = useGetProducts();
 
-  if (isLoading) return 'Loading';
+  if (isLoading) return <Spinner size={50} />;
   if (error) return error;
 
   return (

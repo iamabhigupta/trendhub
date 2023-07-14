@@ -2,12 +2,13 @@ import { Link, useParams } from 'react-router-dom';
 
 import Rating from '../components/Rating';
 import useGetProduct from '../hooks/useGetProduct';
+import Spinner from '../components/Spinner';
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
   const { data: product, isLoading, error } = useGetProduct(productId!);
 
-  if (isLoading) return 'Loading';
+  if (isLoading) return <Spinner size={50} />;
   if (error || !product) throw error;
 
   return (
