@@ -5,7 +5,7 @@ import useGetProduct from '../hooks/useGetProduct';
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
-  const { data: product, isLoading, error } = useGetProduct(productIdx!);
+  const { data: product, isLoading, error } = useGetProduct(productId!);
 
   if (isLoading) return 'Loading';
   if (error || !product) throw error;

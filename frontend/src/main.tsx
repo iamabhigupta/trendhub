@@ -10,14 +10,15 @@ import {
 
 import App from './App.tsx';
 import './index.css';
-import HomeScreen from './screens/HomeScreen.tsx';
-import ProductScreen from './screens/ProductScreen.tsx';
+import HomeScreen from './screens/HomeScreen';
+import ProductScreen from './screens/ProductScreen';
+import ErrorScreen from './screens/ErrorScreen.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<App />}>
+    <Route path="/" element={<App />} errorElement={<ErrorScreen />}>
       <Route index={true} path="/" element={<HomeScreen />} />
-      <Route index={true} path="/product/:id" element={<ProductScreen />} />
+      <Route path="/product/:id" element={<ProductScreen />} />
     </Route>
   )
 );
