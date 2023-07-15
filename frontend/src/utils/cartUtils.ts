@@ -13,7 +13,9 @@ export const updateCart = (state: CartState) => {
     )
   );
 
-  state.shippingPrice = addDecimals(Number(state.itemsPrice) > 100 ? 0 : 10);
+  state.shippingPrice = addDecimals(
+    Number(state.itemsPrice) === 89.99 ? 20 : 10
+  );
 
   state.taxPrice = addDecimals(
     Number((0.15 * Number(state.itemsPrice)).toFixed(2))

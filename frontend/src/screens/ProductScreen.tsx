@@ -64,7 +64,6 @@ const ProductScreen = () => {
                 ${product.price}
               </span>
               <div className="flex justify-between gap-2 ml-auto">
-                {/* {[...Array(product.countInStock).keys()]} */}
                 {product.countInStock > 0 && (
                   <select
                     className="p-2 border rounded"
@@ -77,15 +76,7 @@ const ProductScreen = () => {
                       </option>
                     ))}
                   </select>
-                  // {[...Array(product.countInStock).keys()].map(
-                  //   (x) => (
-                  //     <option key={x + 1} value={x + 1}>
-                  //       {x + 1}
-                  //     </option>
-                  //   )
-                  // )}
                 )}
-
                 <button
                   disabled={product.countInStock === 0}
                   onClick={addToCartHandler}

@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
 import Product from '../entities/Product';
 import { updateCart } from '../utils/cartUtils';
 
@@ -24,7 +24,7 @@ const initialState: CartState = localStorage.getItem('cart')
       totalPrice: '0',
     };
 
-const cartSlice = createSlice({
+const cartSlice: Slice<CartState> = createSlice({
   name: 'cart',
   initialState,
   reducers: {
@@ -43,8 +43,13 @@ const cartSlice = createSlice({
 
       return updateCart(state);
     },
+    removeFromCart: (state, action: PayloadAction<string>) => {
+      state.cartItems = state.cartItems.filter((x) => x._id !== action.payload);
+
+      return updateCart(state);
+    },
   },
 });
 
-export const { addToCart } = cartSlice.actions;
+export const { addToCart, removeFromCart } = cartSlice.actions;
 export default cartSlice.reducer;
