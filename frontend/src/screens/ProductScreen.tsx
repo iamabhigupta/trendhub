@@ -1,12 +1,28 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useState } from 'react';
 
 import Rating from '../components/Rating';
 import useGetProduct from '../hooks/useGetProduct';
 import Spinner from '../components/Spinner';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../slices/cartSlice';
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [qty, setQty] = useState(1);
+
   const { data: product, isLoading, error } = useGetProduct(productId!);
+
+  let addToCartHandler;
+  if (product) {
+    addToCartHandler = () => {
+      dispatch(addToCart({ ...product, qty }));
+      navigate('/cart');
+    };
+  }
 
   if (isLoading) return <Spinner size={50} />;
   if (error || !product) throw error;
@@ -47,12 +63,37 @@ const ProductScreen = () => {
               <span className="title-font font-medium text-2xl text-gray-900">
                 ${product.price}
               </span>
-              <button
-                disabled={product.countInStock === 0}
-                className="flex ml-auto text-white bg-rose-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded"
-              >
-                Add to cart
-              </button>
+              <div className="flex justify-between gap-2 ml-auto">
+                {/* {[...Array(product.countInStock).keys()]} */}
+                {product.countInStock > 0 && (
+                  <select
+                    className="p-2 border rounded"
+                    value={qty}
+                    onChange={(e) => setQty(Number(e.target.value))}
+                  >
+                    {[...Array(product.countInStock).keys()].map((x) => (
+                      <option key={x + 1} value={x + 1}>
+                        {x + 1}
+                      </option>
+                    ))}
+                  </select>
+                  // {[...Array(product.countInStock).keys()].map(
+                  //   (x) => (
+                  //     <option key={x + 1} value={x + 1}>
+                  //       {x + 1}
+                  //     </option>
+                  //   )
+                  // )}
+                )}
+
+                <button
+                  disabled={product.countInStock === 0}
+                  onClick={addToCartHandler}
+                  className="flex ml-auto text-white bg-rose-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded"
+                >
+                  Add to cart
+                </button>
+              </div>
             </div>
           </div>
         </div>

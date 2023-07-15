@@ -7,12 +7,14 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 import App from './App.tsx';
 import './index.css';
 import HomeScreen from './screens/HomeScreen.tsx';
 import ProductScreen from './screens/ProductScreen';
 import ErrorScreen from './screens/ErrorScreen.tsx';
+import store from './store.ts';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,8 +29,10 @@ const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </Provider>
   </React.StrictMode>
 );
