@@ -1,12 +1,11 @@
-import asyncHandler from '../middlewares/asyncHandler.js';
-import User from '../models/userModel.js';
-import jwt from 'jsonwebtoken';
+import asyncHandler from '../middleware/asyncHandler.js';
 import generateToken from '../utils/generateToken.js';
+import User from '../models/userModel.js';
 
-// @desc    Auth user and token
-// @route   POST /api/users/login
+// @desc    Auth user & get token
+// @route   POST /api/users/auth
 // @access  Public
-const login = asyncHandler(async (req, res) => {
+const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
@@ -14,7 +13,7 @@ const login = asyncHandler(async (req, res) => {
   if (user && (await user.matchPassword(password))) {
     generateToken(res, user._id);
 
-    res.status(200).json({
+    res.json({
       _id: user._id,
       name: user.name,
       email: user.email,
@@ -26,7 +25,7 @@ const login = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Register user
+// @desc    Register a new user
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
@@ -60,16 +59,16 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Logout user / clear cookies
+// @desc    Logout user / clear cookie
 // @route   POST /api/users/logout
-// @access  Private
-const logoutUser = asyncHandler(async (req, res) => {
+// @access  Public
+const logoutUser = (req, res) => {
   res.cookie('jwt', '', {
     httpOnly: true,
     expires: new Date(0),
   });
   res.status(200).json({ message: 'Logged out successfully' });
-});
+};
 
 // @desc    Get user profile
 // @route   GET /api/users/profile
@@ -78,7 +77,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
   if (user) {
-    res.status(200).json({
+    res.json({
       _id: user._id,
       name: user.name,
       email: user.email,
@@ -86,7 +85,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(404);
-    throw new error('User not found');
+    throw new Error('User not found');
   }
 });
 
@@ -118,42 +117,42 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Get users
+// @desc    Get all users
 // @route   GET /api/users
-// @access  Private / Admin
+// @access  Private/Admin
 const getUsers = asyncHandler(async (req, res) => {
-  res.send('Get users');
+  res.send('get users');
 });
 
-// @desc    Get user
-// @route   GET /api/users/:id
-// @access  Private / Admin
-const getUserById = asyncHandler(async (req, res) => {
-  res.send('getUserById');
-});
-
-// @desc    Delete users
+// @desc    Delete user
 // @route   DELETE /api/users/:id
-// @access  Private / Admin
+// @access  Private/Admin
 const deleteUser = asyncHandler(async (req, res) => {
-  res.send('Delete user');
+  res.send('delete user');
 });
 
-// @desc    Update users
+// @desc    Get user by ID
+// @route   GET /api/users/:id
+// @access  Private/Admin
+const getUserById = asyncHandler(async (req, res) => {
+  res.send('get user by id');
+});
+
+// @desc    Update user
 // @route   PUT /api/users/:id
-// @access  Private / Admin
+// @access  Private/Admin
 const updateUser = asyncHandler(async (req, res) => {
-  res.send('Update user');
+  res.send('update user');
 });
 
 export {
-  login,
+  authUser,
   registerUser,
   logoutUser,
   getUserProfile,
   updateUserProfile,
   getUsers,
-  getUserById,
   deleteUser,
+  getUserById,
   updateUser,
 };
