@@ -9,7 +9,7 @@ const HomeScreen = () => {
 
   return (
     <>
-      <section className="">
+      <section className="mt-20">
         <div className="container px-5 pb-20 mx-auto">
           <h2 className="text-4xl text-gray-800 py-8 font-semibold tracking-tighter">
             Latest Products
