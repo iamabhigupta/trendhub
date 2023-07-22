@@ -28,22 +28,22 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar bg='primary' variant='dark' expand='lg' collapseOnSelect>
+      <Navbar bg="primary" variant="dark" expand="lg" collapseOnSelect>
         <Container>
-          <LinkContainer to='/'>
+          <LinkContainer to="/">
             <Navbar.Brand>
               <img src={logo} />
               ProShop
             </Navbar.Brand>
           </LinkContainer>
-          <Navbar.Toggle aria-controls='basic-navbar-nav' />
-          <Navbar.Collapse id='basic-navbar-nav'>
-            <Nav className='ms-auto'>
-              <LinkContainer to='/cart'>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ms-auto">
+              <LinkContainer to="/cart">
                 <Nav.Link>
                   <FaShoppingCart /> Cart
                   {cartItems.length > 0 && (
-                    <Badge pill bg='success' style={{ marginLeft: '5px' }}>
+                    <Badge pill bg="success" style={{ marginLeft: '5px' }}>
                       {cartItems.reduce((a, c) => a + c.qty, 0)}
                     </Badge>
                   )}
@@ -51,8 +51,8 @@ const Header = () => {
               </LinkContainer>
               {userInfo ? (
                 <>
-                  <NavDropdown title={userInfo.name} id='username'>
-                    <LinkContainer to='/profile'>
+                  <NavDropdown title={userInfo.name} id="username">
+                    <LinkContainer to="/profile">
                       <NavDropdown.Item>Profile</NavDropdown.Item>
                     </LinkContainer>
                     <NavDropdown.Item onClick={logoutHandler}>
@@ -61,11 +61,18 @@ const Header = () => {
                   </NavDropdown>
                 </>
               ) : (
-                <LinkContainer to='/login'>
+                <LinkContainer to="/login">
                   <Nav.Link>
                     <FaUser /> Sign In
                   </Nav.Link>
                 </LinkContainer>
+              )}
+              {userInfo && userInfo.isAdmin && (
+                <NavDropdown title="Admin" id="adminmenu">
+                  <LinkContainer to="/admin/orderlist">
+                    <NavDropdown.Item>Orders</NavDropdown.Item>
+                  </LinkContainer>
+                </NavDropdown>
               )}
             </Nav>
           </Navbar.Collapse>
