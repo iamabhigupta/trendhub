@@ -1,9 +1,9 @@
 import { LinkContainer } from 'react-router-bootstrap';
 import { Table, Button } from 'react-bootstrap';
 import { FaTimes } from 'react-icons/fa';
-import { useGetOrdersQuery } from '../../slices/orderApiSlice';
-import Loader from '../../components/Loader';
 import Message from '../../components/Message';
+import Loader from '../../components/Loader';
+import { useGetOrdersQuery } from '../../slices/ordersApiSlice';
 
 const OrderListScreen = () => {
   const { data: orders, isLoading, error } = useGetOrdersQuery();
@@ -38,7 +38,7 @@ const OrderListScreen = () => {
                 <td>{order.createdAt.substring(0, 10)}</td>
                 <td>${order.totalPrice}</td>
                 <td>
-                  {order.isDelivered ? (
+                  {order.isPaid ? (
                     order.deliveredAt.substring(0, 10)
                   ) : (
                     <FaTimes style={{ color: 'red' }} />
